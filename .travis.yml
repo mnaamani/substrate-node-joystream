@@ -3,8 +3,7 @@ rust:
 - 1.41.1
 cache: cargo
 os:
-- linux:
-  dist: trusty
+- linux
 - osx
 - windows
 before_script:
