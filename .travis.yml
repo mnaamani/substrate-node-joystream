@@ -1,7 +1,13 @@
 language: rust
+
 rust:
 - 1.41.1
+
 cache: cargo
+
+# avoids container infrastructure and uses standard infrastructure...
+# more resources?
+sudo: required
 
 # https://github.com/rust-lang/cargo/pull/6254
 # Use older xcode image to get around slow build
