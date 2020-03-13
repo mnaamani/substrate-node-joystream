@@ -11,7 +11,7 @@ sudo: required
 
 # https://github.com/rust-lang/cargo/pull/6254
 # Use older xcode image to get around slow build
-osx_image: xcode9.2
+osx_image: xcode8.3
 
 dist: trusty
 
