@@ -5,10 +5,6 @@ rust:
 
 cache: cargo
 
-# avoids container infrastructure and uses standard infrastructure...
-# more resources?
-sudo: required
-
 # https://github.com/rust-lang/cargo/pull/6254
 # Use older xcode image to get around slow build
 osx_image: xcode8.3
@@ -17,8 +13,8 @@ dist: trusty
 
 os:
 - linux
-- osx
-- windows
+# - osx
+# - windows
 
 before_script:
 - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export TARGET=x86_64-apple-darwin ; fi
@@ -40,7 +36,7 @@ script:
 deploy:
   provider: releases
   api_key:
-    secure: oqlOd1BiScrD/cwUQZpGSPiroDZN6LaHPyunoe5dQNE6cjrt8YCQs5m11G8pbVa7yz3TS2w1eMqO6hyrskL8VF7qxlF44IAGEDQFtd++RX7i0Re1CLcoN29TN3oIpu7IuWaFAJKl3Iu6Dt0CkhgCfvmzJ0gh5EO+49MjhldrQJm0sN+H2PgXudjuObCHayuVz7sO5Tahb1OpNtAlH9F5KQU67aN9ulAM39BXS7dor5lP2EhDq58hiBjPh3AHJroBlxDaGXgRMDGiR5OwDp3eGuqI2xxOkJVEKwyFURAggc74f+VBimRqIHT9NXAyZwC7r0XDxj+7UgHtTwn6uZ022U1tXalI4Txmwf/fdpmuCV/z6a6mXeL3Gk9vs9Y5v8h8XgkuguGLdcwqJxfd8K6mTObzOBonB9I777fuej/LIrOCfoH0DuCPikPBoQb5MMIXEE0364c+a6yrCjlY/2EyG4/XGbM5IP90f+zCk6sGzbpof669rF1DinOac8v6ak+WG0QUVN+AVUS9hQFR3X3Xabeo3f3tzemi4ovc67jTwyagmJuEg0Coc8voLMoma89igYPUZtGlElIFIYvs+AkwnVoQIyPBoosYgM/GfjQXHfgVpTXnuBONNSf2Q/c/gp43dDq0IZxSUgRb4TnPAd64gZPrP01R7yMR3C0U9Z2MJ0o=
+    secure: QTna4XzKmPrXNA5KnYfLsH8cAKxESLdFbQ5HJ6nvB9reE10SVtg8lZ+ShL+no7TACNBUNt09Qv9HNgs6JcNRJ9QMHEJHKIbMyjplhBtZ+W3l0k+6TL0yeKHZ/OvddDF+vDbpN+y4xBfOf0xqZcNH3lZJTms/NPBn/KT5DpQ3JZ8bibdMP2HSCazfvHLwj38OuLX6VWbFcmN2RAmUR9AXYvk5wWYVw8g1VDzTCxjH1G+dGWH1L9+ZDgFfv7BNSNhPc6V9GghgLVZ+37r/STzTTAQ/gPv+yruglEWUhSAngFfVYUegvTmIeQLi/V+g0tKUS+l7eNX08xz6eZcn0+/32V7P+oEN/dhU84E0kgmiOsiUEGI/KFM+qw9TyX3GtD67UmG5TZrD7OUMIu1qCuPSetsTOK2kvpwlYAn+j5iFB30Uz4hXhOH5dib2zz2I7cYHi1kvzeNQqQOPNDCmaO48bcbRIaeqMAHdsb6scGzh/+CD2V2HOmHlhd+4o1PpX6hAMwmOXAu3bMDi4zlB9Hb1cSZnsYNBHawkD6y45QGepFKpGW/6u5VRPeMK62Gm9wu815C36B4mVg6CVqtZMbk0WYPIk6zfoTft3i04YthKbRO96a5VD9LssVbiSYnudXuZJjSllSZVCi9AKS8JVIS2jC2z+tWkquAesSrwztriRcs=
   file: "${FILENAME}.tar.gz"
   skip_cleanup: true
   draft: true
