@@ -3,7 +3,10 @@ rust:
 - 1.41.1
 cache: cargo
 
-osx_image: xcode10.3
+# https://github.com/rust-lang/cargo/pull/6254
+# Use older xcode image to get around slow build
+osx_image: xcode9.2
+
 dist: trusty
 
 os:
