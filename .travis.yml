@@ -3,33 +3,40 @@ language: rust
 rust:
 - 1.41.1
 
-# cache: cargo
-
-# https://github.com/rust-lang/cargo/pull/6254
-# Use older xcode image to get around slow build
-osx_image: xcode8.3
-
-dist: trusty
-
 os:
 - linux
-# - osx
-# - windows
 
-before_script:
-- if [ "$TRAVIS_OS_NAME" = "osx" ]; then export TARGET=x86_64-apple-darwin ; fi
-- if [ "$TRAVIS_OS_NAME" = "linux" ]; then export TARGET=x86_64-unknown-linux-gnu ; fi
+services: docker
+
+env:
+  - TARGET=x86_64-unknown-linux-gnu
+  - TARGET=arm-unknown-linux-gnueabihf
+
+before_install:
+- if [ "$TARGET" = "x86_64-unknown-linux-gnu" ]; then
+    rustup update nightly
+    rustup target add ${TARGET}
+    rustup target add wasm32-unknown-unknown --toolchain nightly
+    rustup show
+  else
+    docker pull joystream/rust-raspberry
+  fi
 - rustup component add rustfmt
-- rustup update nightly
-- rustup target add ${TARGET}
-- rustup target add wasm32-unknown-unknown --toolchain nightly
-- rustup show
 
 script:
 - cargo fmt --all -- --check
-- cargo build --release --target=${TARGET}
+- if [ "$TARGET" = "x86_64-unknown-linux-gnu" ]; then
+    cargo build --release --target=${TARGET}
+    export FILENAME="joystream-node-x86_64-linux-gnu"
+  else
+    docker run \
+      --volume ${PWD}/:/home/cross/project \
+      --volume ${HOME}/.cargo/registry:/home/cross/.cargo/registry \
+      joystream/rust-raspberry \
+      build --release
+    export FILENAME="joystream-node-armv7-linux-gnueabihf"
+  fi
 - mv ./target/${TARGET}/release/joystream-node .
-- export FILENAME=`./joystream-node --version | sed -e "s/ /-/g"`
 - tar -cf ${FILENAME}.tar ./joystream-node
 - gzip ${FILENAME}.tar
 
