@@ -37,7 +37,7 @@ script:
   else
     export FILENAME="joystream-node-armv7-linux-gnueabihf"
     mkdir -p ${TRAVIS_BUILD_DIR}/target/release
-    docker run \
+    docker run -u root \
       --volume ${TRAVIS_BUILD_DIR}:/home/cross/project \
         joystream/rust-raspberry \
       build --release
