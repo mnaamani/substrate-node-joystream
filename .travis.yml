@@ -13,7 +13,8 @@ env:
   - TARGET=arm-unknown-linux-gnueabihf
 
 before_install:
-- if [ "$TARGET" = "x86_64-unknown-linux-gnu" ];
+- |
+  if [ "$TARGET" = "x86_64-unknown-linux-gnu" ]
   then
     rustup update nightly
     rustup target add ${TARGET}
@@ -28,7 +29,8 @@ before_scripts:
   - cargo fmt --all -- --check
 
 script:
-- if [ "$TARGET" = "x86_64-unknown-linux-gnu" ];
+- |
+  if [ "$TARGET" = "x86_64-unknown-linux-gnu" ]
   then
     cargo build --release --target=${TARGET}
     export FILENAME="joystream-node-x86_64-linux-gnu"
