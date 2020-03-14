@@ -32,15 +32,14 @@ script:
 - |
   if [ "$TARGET" = "x86_64-unknown-linux-gnu" ]
   then
-    cargo build --release --target=${TARGET}
     export FILENAME="joystream-node-x86_64-linux-gnu"
+    cargo build --release --target=${TARGET}
   else
+    export FILENAME="joystream-node-armv7-linux-gnueabihf"
     docker run \
-      --volume ${PWD}/:/home/cross/project \
-      --volume ${HOME}/.cargo/registry:/home/cross/.cargo/registry \
+      --volume ${TRAVIS_BUILD_DIR}/:/home/cross/project \
       joystream/rust-raspberry \
       build --release
-    export FILENAME="joystream-node-armv7-linux-gnueabihf"
   fi
 
 before_deploy:
