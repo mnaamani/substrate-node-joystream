@@ -36,7 +36,8 @@ script:
     cargo build --release --target=${TARGET}
   else
     export FILENAME="joystream-node-armv7-linux-gnueabihf"
-    sudo docker run \
+    mkdir -p ${TRAVIS_BUILD_DIR}/target/release
+    docker run \
       --volume ${TRAVIS_BUILD_DIR}:/home/cross/project \
         joystream/rust-raspberry \
       build --release
